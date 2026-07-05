@@ -13,7 +13,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.api_urls')),
-    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('', TemplateView.as_view(template_name='main/index.html'), name='home'),  # Use your original template
 ]
 
 # Serve media and static files in development and production
