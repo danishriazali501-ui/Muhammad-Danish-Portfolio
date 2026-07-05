@@ -4,7 +4,7 @@
   "installCommand": "pip install -r requirements.txt",
   "env": {
     "DJANGO_SETTINGS_MODULE": "portfolio.settings",
-    "SECRET_KEY": "@your-secret-key-here@",
+    "SECRET_KEY": "django-insecure-8mz!x#9$%^&*()_+-=[]{}|;:,.<>?/~`abcd1234efgh5678ijkl9012mnop",
     "DEBUG": "False"
   },
   "builds": [
