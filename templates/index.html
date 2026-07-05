@@ -1,121 +1,208 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Danish - Full Stack Developer</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Danish — Full Stack Python Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <script defer src="{% static 'js/script.js' %}"></script>
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Muhammad Danish</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Hi, I'm Muhammad Danish</h1>
-                <p class="subtitle">Full Stack Developer | Python | Django | React</p>
-                <p class="description">Building beautiful and functional web applications</p>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-                <div class="social-links">
-                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="ld-letters">
+      <span class="ld-l">M</span>
+      <span class="ld-l">U</span>
+      <span class="ld-l">H</span>
+      <span class="ld-l">A</span>
+      <span class="ld-l">M</span>
+      <span class="ld-l">M</span>
+      <span class="ld-l">A</span>
+      <span class="ld-l">D</span>
+      <span class="ld-l"> </span>
+      <span class="ld-l"> </span>
+      <span class="ld-l">D</span>
+      <span class="ld-l">A</span>
+      <span class="ld-l">N</span>
+      <span class="ld-l">I</span>
+      <span class="ld-l">S</span>
+      <span class="ld-l">H</span>
+    </div>
+    <div class="ld-line"></div>
+    <div class="ld-sub">Full Stack Python Developer</div>
+  </div>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>I'm a passionate full-stack developer with expertise in building scalable web applications. With a strong foundation in Python, Django, and modern frontend frameworks, I create solutions that are both beautiful and functional.</p>
-                <p>Visitor Count: <span id="visitor-count">0</span></p>
-            </div>
-        </div>
-    </section>
+  <!-- BG -->
+  <div class="bg-texture"></div>
+  <div class="bg-lines"></div>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>My Skills</h2>
-            <div class="skills-grid" id="skills-container">
-                <!-- Skills will be loaded here -->
-            </div>
-        </div>
-    </section>
+  <!-- MOBILE MENU -->
+  <div class="mmenu" id="mmenu">
+    <a href="#hero" onclick="closeMob()">Home</a>
+    <a href="#about" onclick="closeMob()">About</a>
+    <a href="#services" onclick="closeMob()">Services</a>
+    <a href="#skills" onclick="closeMob()">Skills</a>
+    <a href="#portfolio" onclick="closeMob()">Portfolio</a>
+    <a href="#contact" onclick="closeMob()">Contact</a>
+  </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>My Projects</h2>
-            <div class="projects-grid" id="projects-container">
-                <!-- Projects will be loaded here -->
-            </div>
-        </div>
-    </section>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo"><span>MD</span></div>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-toggle" id="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2>My Services</h2>
-            <div class="services-grid" id="services-container">
-                <!-- Services will be loaded here -->
-            </div>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Muhammad <span>Danish</span></h1>
+      <p class="hero-subtitle">Full Stack Developer | Python | Django | React</p>
+      <p class="hero-desc">Crafting digital solutions with modern technologies</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      </div>
+      <div class="hero-socials">
+        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    <div class="hero-visual"></div>
+  </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <form id="contact-form" class="contact-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="subject" placeholder="Subject">
-                </div>
-                <div class="form-group">
-                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-                <div id="form-message" class="form-message"></div>
-            </form>
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="section-header">
+        <h2>About Me</h2>
+        <p>Get to know me better</p>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>I'm a passionate full-stack developer with a strong background in Python and Django. I create responsive, user-friendly web applications that solve real-world problems.</p>
+          <p>With expertise in both frontend and backend development, I bring ideas to life through clean, efficient code and innovative design.</p>
+          <p><strong>Total Visitors: <span id="visitor-count">0</span></strong></p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Muhammad Danish. All rights reserved.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <h3>5+</h3>
+            <p>Years Experience</p>
+          </div>
+          <div class="stat">
+            <h3>50+</h3>
+            <p>Projects Completed</p>
+          </div>
+          <div class="stat">
+            <h3>30+</h3>
+            <p>Happy Clients</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="{% static 'js/script.js' %}"></script>
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>Services</h2>
+        <p>What I offer</p>
+      </div>
+      <div class="services-grid" id="services-container">
+        <!-- Services loaded from API -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills">
+    <div class="container">
+      <div class="section-header">
+        <h2>Skills</h2>
+        <p>My expertise</p>
+      </div>
+      <div class="skills-grid" id="skills-container">
+        <!-- Skills loaded from API -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <h2>Portfolio</h2>
+        <p>My best works</p>
+      </div>
+      <div class="portfolio-grid" id="projects-container">
+        <!-- Projects loaded from API -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2>Get In Touch</h2>
+        <p>Let's work together</p>
+      </div>
+      <div class="contact-content">
+        <form id="contact-form" class="contact-form">
+          {% csrf_token %}
+          <div class="form-group">
+            <input type="text" id="name" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" placeholder="Your Email" required />
+          </div>
+          <div class="form-group">
+            <input type="text" id="subject" placeholder="Subject" />
+          </div>
+          <div class="form-group">
+            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <div id="form-message" class="form-message"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Muhammad Danish. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
 </body>
+
 </html>
