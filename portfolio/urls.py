@@ -8,12 +8,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
+from core.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.api_urls')),
-    path('', TemplateView.as_view(template_name='main/index.html'), name='home'),  # Use your original template
+    path('', home, name='home'),
 ]
 
 # Serve media and static files in development and production
