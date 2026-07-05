@@ -12,21 +12,21 @@ from .serializers import SkillSerializer, ProjectSerializer, ServiceSerializer, 
 
 # ── HOME PAGE ──
 def home(request):
-    # Visitor count update karo
-    counter, _ = VisitorCount.objects.get_or_create(id=1)
-    counter.count += 1
-    counter.save()
-
-    skills = Skill.objects.filter(is_active=True)
-    projects = Project.objects.filter(is_active=True)
-    services = Service.objects.filter(is_active=True)
-    context = {
-        'skills': skills,
-        'projects': projects,
-        'services': services,
-        'visitor_count': counter.count,
-    }
-    return render(request, 'main/index.html', context)
+    """Home page - returns API status"""
+    return JsonResponse({
+        'message': 'Welcome to Muhammad Danish Portfolio API',
+        'version': '1.0',
+        'endpoints': {
+            'skills': '/api/skills/',
+            'projects': '/api/projects/',
+            'services': '/api/services/',
+            'contact': '/api/contact/',
+            'portfolio_data': '/api/portfolio-data/',
+            'visitor_count': '/api/visitors/',
+            'resume_download': '/api/resume/download/',
+        },
+        'admin': '/admin/',
+    })
 
 
 # ── DRF ViewSets ──
@@ -77,14 +77,17 @@ def contact_json(request):
         data = json.loads(request.body)
         name = data.get('name', '').strip()
         email = data.get('email', '').strip()
+        subject = data.get('subject', 'No Subject').strip()
         message = data.get('message', '').strip()
 
         if not all([name, email, message]):
-            return JsonResponse({'success': False, 'error': 'Sab fields fill karo!'}, status=400)
+            return JsonResponse({'success': False, 'error': 'Name, email, and message are required!'}, status=400)
 
-        ContactMessage.objects.create(name=name, email=email, message=message)
-        return JsonResponse({'success': True, 'message': 'Message send ho gaya!'})
+        ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
+        return JsonResponse({'success': True, 'message': 'Message received successfully!'})
 
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
@@ -120,6 +123,8 @@ def skills_api(request):
 @require_GET
 def visitor_count_api(request):
     counter, _ = VisitorCount.objects.get_or_create(id=1)
+    counter.count += 1
+    counter.save()
     return JsonResponse({'count': counter.count})
 
 
@@ -132,4 +137,4 @@ def download_resume(request):
         response['Content-Disposition'] = 'attachment; filename="Muhammad_Danish_Resume.pdf"'
         return response
     except Resume.DoesNotExist:
-        raise Http404("Resume upload nahi hua abhi.")
+        return JsonResponse({'error': 'No resume uploaded yet'}, status=404)
