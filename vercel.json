@@ -1,34 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "bash build.sh",
-  "installCommand": "pip install -r requirements.txt",
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "portfolio.settings",
-    "SECRET_KEY": "django-insecure-8mz!x#9$%^&*()_+-=[]{}|;:,.<>?/~`abcd1234efgh5678ijkl9012mnop",
-    "DEBUG": "False"
-  },
   "builds": [
     {
       "src": "portfolio/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.11"
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "portfolio/wsgi.py"
