@@ -322,3 +322,13 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
 
 });
+
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+
+    if (loader) {
+        setTimeout(() => {
+            loader.classList.add("out");
+        }, 1800);
+    }
+});
