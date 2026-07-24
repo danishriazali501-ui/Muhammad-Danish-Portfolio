@@ -11,11 +11,11 @@ from .serializers import SkillSerializer, ProjectSerializer, ServiceSerializer, 
 
 
 # ── HOME PAGE ──
-
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse("<h1>Portfolio Working</h1>")
+    return render(request, "index.html")
+
 
 # ── DRF ViewSets ──
 class SkillViewSet(viewsets.ModelViewSet):
