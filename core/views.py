@@ -11,22 +11,10 @@ from .serializers import SkillSerializer, ProjectSerializer, ServiceSerializer, 
 
 
 # ── HOME PAGE ──
+from django.shortcuts import render
+
 def home(request):
-    """Home page - returns API status"""
-    return JsonResponse({
-        'message': 'Welcome to Muhammad Danish Portfolio API',
-        'version': '1.0',
-        'endpoints': {
-            'skills': '/api/skills/',
-            'projects': '/api/projects/',
-            'services': '/api/services/',
-            'contact': '/api/contact/',
-            'portfolio_data': '/api/portfolio-data/',
-            'visitor_count': '/api/visitors/',
-            'resume_download': '/api/resume/download/',
-        },
-        'admin': '/admin/',
-    })
+    return render(request, "main/template.html")
 
 
 # ── DRF ViewSets ──
