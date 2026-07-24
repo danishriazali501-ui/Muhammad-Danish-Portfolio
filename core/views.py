@@ -16,6 +16,10 @@ from django.shortcuts import render
 def home(request):
     return render(request, "main/index.html")
 
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("<h1>Portfolio Working</h1>")
 
 # ── DRF ViewSets ──
 class SkillViewSet(viewsets.ModelViewSet):
