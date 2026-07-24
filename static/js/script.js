@@ -1,210 +1,324 @@
-// API Base URL - Uses same domain in production
-const API_BASE_URL = '/api';
+// API Base URL
+const API_BASE_URL = "/api";
 
-// Fetch and display skills
+// -------------------------
+// Skills
+// -------------------------
 async function loadSkills() {
+    const container = document.getElementById("skills-container");
+    if (!container) return;
+
     try {
         const response = await fetch(`${API_BASE_URL}/skills/`);
-        const data = await response.json();
-        
-        const skillsContainer = document.getElementById('skills-container');
-        skillsContainer.innerHTML = '';
+        if (!response.ok) throw new Error("Failed to load skills");
 
-        if (data.results && data.results.length > 0) {
-            data.results.forEach(skill => {
-                const skillCard = document.createElement('div');
-                skillCard.className = 'skill-card';
-                skillCard.innerHTML = `
-                    <h3>${skill.name}</h3>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar" style="width: ${skill.percentage}%"></div>
+        const data = await response.json();
+        container.innerHTML = "";
+
+        const skills = data.results || data;
+
+        if (skills.length) {
+            skills.forEach(skill => {
+                container.innerHTML += `
+                    <div class="skill-card">
+                        <h3>${skill.name}</h3>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" style="width:${skill.percentage}%"></div>
+                        </div>
+                        <span>${skill.percentage}%</span>
                     </div>
-                    <div class="skill-percent">${skill.percentage}%</div>
                 `;
-                skillsContainer.appendChild(skillCard);
             });
         } else {
-            skillsContainer.innerHTML = '<p>No skills added yet. Add them in the admin panel.</p>';
+            container.innerHTML = "<p>No skills found.</p>";
         }
-    } catch (error) {
-        console.error('Error loading skills:', error);
-        document.getElementById('skills-container').innerHTML = '<p>Error loading skills. Please try again.</p>';
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>Unable to load skills.</p>";
     }
 }
 
-// Fetch and display projects
+// -------------------------
+// Projects
+// -------------------------
 async function loadProjects() {
+    const container = document.getElementById("projects-container");
+    if (!container) return;
+
     try {
         const response = await fetch(`${API_BASE_URL}/projects/`);
+        if (!response.ok) throw new Error("Failed to load projects");
+
         const data = await response.json();
-        
-        const projectsContainer = document.getElementById('projects-container');
-        projectsContainer.innerHTML = '';
+        container.innerHTML = "";
 
-        if (data.results && data.results.length > 0) {
-            data.results.forEach(project => {
-                const projectCard = document.createElement('div');
-                projectCard.className = 'project-card';
-                
-                let linksHTML = '';
-                if (project.github_link) {
-                    linksHTML += `<a href="${project.github_link}" target="_blank" class="project-links github-link">GitHub</a>`;
-                }
-                if (project.live_link) {
-                    linksHTML += `<a href="${project.live_link}" target="_blank" class="project-links live-link">Live Demo</a>`;
-                }
+        const projects = data.results || data;
 
-                let techHTML = '';
-                if (project.tech_list) {
-                    techHTML = project.tech_list.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
-                }
+        if (projects.length) {
+            projects.forEach(project => {
 
-                projectCard.innerHTML = `
+                const tech =
+                    project.tech_list
+                        ? project.tech_list.map(t => `<span class="tech-tag">${t}</span>`).join("")
+                        : "";
+
+                container.innerHTML += `
+                <div class="project-card">
                     <div class="project-image">
-                        ${project.image ? `<img src="${project.image}" alt="${project.title}">` : '📱'}
+                        ${
+                            project.image
+                            ? `<img src="${project.image}" alt="${project.title}">`
+                            : ""
+                        }
                     </div>
+
                     <div class="project-content">
-                        <span class="project-tag">${project.tag}</span>
                         <h3>${project.title}</h3>
-                        <p class="project-description">${project.description}</p>
-                        <div class="project-tech">${techHTML}</div>
-                        <div class="project-links">
-                            ${linksHTML || '<p>No links available</p>'}
-                        </div>
+
+                        <p>${project.description}</p>
+
+                        <div>${tech}</div>
+
+                        <br>
+
+                        ${
+                            project.github_link
+                            ? `<a href="${project.github_link}" target="_blank">GitHub</a>`
+                            : ""
+                        }
+
+                        ${
+                            project.live_link
+                            ? `<a href="${project.live_link}" target="_blank"> Live Demo</a>`
+                            : ""
+                        }
+
                     </div>
+                </div>
                 `;
-                projectsContainer.appendChild(projectCard);
             });
+
         } else {
-            projectsContainer.innerHTML = '<p>No projects added yet. Add them in the admin panel.</p>';
+
+            container.innerHTML = "<p>No projects found.</p>";
+
         }
-    } catch (error) {
-        console.error('Error loading projects:', error);
-        document.getElementById('projects-container').innerHTML = '<p>Error loading projects. Please try again.</p>';
+
+    } catch (err) {
+
+        console.error(err);
+
+        container.innerHTML = "<p>Unable to load projects.</p>";
+
     }
+
 }
 
-// Fetch and display services
+// -------------------------
+// Services
+// -------------------------
 async function loadServices() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/services/`);
-        const data = await response.json();
-        
-        const servicesContainer = document.getElementById('services-container');
-        servicesContainer.innerHTML = '';
 
-        if (data.results && data.results.length > 0) {
-            data.results.forEach(service => {
-                const serviceCard = document.createElement('div');
-                serviceCard.className = 'service-card';
-                serviceCard.innerHTML = `
+    const container = document.getElementById("services-container");
+
+    if (!container) return;
+
+    try {
+
+        const response = await fetch(`${API_BASE_URL}/services/`);
+
+        if (!response.ok) throw new Error("Failed to load services");
+
+        const data = await response.json();
+
+        container.innerHTML = "";
+
+        const services = data.results || data;
+
+        if (services.length) {
+
+            services.forEach(service => {
+
+                container.innerHTML += `
+                <div class="service-card">
                     <h3>${service.title}</h3>
                     <p>${service.description}</p>
+                </div>
                 `;
-                servicesContainer.appendChild(serviceCard);
+
             });
+
         } else {
-            servicesContainer.innerHTML = '<p>No services added yet. Add them in the admin panel.</p>';
+
+            container.innerHTML = "<p>No services found.</p>";
+
         }
-    } catch (error) {
-        console.error('Error loading services:', error);
-        document.getElementById('services-container').innerHTML = '<p>Error loading services. Please try again.</p>';
+
+    } catch (err) {
+
+        console.error(err);
+
+        container.innerHTML = "<p>Unable to load services.</p>";
+
     }
+
 }
 
-// Fetch visitor count
+// -------------------------
+// Visitor Counter
+// -------------------------
 async function loadVisitorCount() {
+
+    const visitor = document.getElementById("visitor-count");
+
+    if (!visitor) return;
+
     try {
+
         const response = await fetch(`${API_BASE_URL}/visitors/`);
+
+        if (!response.ok) return;
+
         const data = await response.json();
-        document.getElementById('visitor-count').textContent = data.count;
-    } catch (error) {
-        console.error('Error loading visitor count:', error);
+
+        visitor.textContent = data.count;
+
+    } catch (err) {
+
+        console.error(err);
+
     }
+
 }
 
-// Handle contact form submission
-document.getElementById('contact-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+// -------------------------
+// Contact Form
+// -------------------------
+const contactForm = document.getElementById("contact-form");
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-    const formMessage = document.getElementById('form-message');
+if (contactForm) {
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/contact/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                subject,
-                message,
-            }),
+    contactForm.addEventListener("submit", async function (e) {
+
+        e.preventDefault();
+
+        const formMessage = document.getElementById("form-message");
+
+        try {
+
+            const response = await fetch(`${API_BASE_URL}/contact/`, {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json",
+
+                    "X-CSRFToken": getCookie("csrftoken"),
+
+                },
+
+                body: JSON.stringify({
+
+                    name: document.getElementById("name").value,
+
+                    email: document.getElementById("email").value,
+
+                    subject: document.getElementById("subject").value,
+
+                    message: document.getElementById("message").value,
+
+                }),
+
+            });
+
+            if (response.ok) {
+
+                formMessage.innerHTML = "Message Sent Successfully.";
+
+                contactForm.reset();
+
+            } else {
+
+                formMessage.innerHTML = "Failed to send message.";
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            formMessage.innerHTML = "Server Error.";
+
+        }
+
+    });
+
+}
+
+// -------------------------
+// CSRF
+// -------------------------
+function getCookie(name) {
+
+    let cookieValue = null;
+
+    if (document.cookie) {
+
+        document.cookie.split(";").forEach(cookie => {
+
+            cookie = cookie.trim();
+
+            if (cookie.startsWith(name + "=")) {
+
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+            }
+
         });
 
-        if (response.ok) {
-            formMessage.className = 'form-message success';
-            formMessage.textContent = 'Message sent successfully! I will get back to you soon.';
-            document.getElementById('contact-form').reset();
-        } else {
-            const errorData = await response.json();
-            formMessage.className = 'form-message error';
-            formMessage.textContent = `Error: ${errorData.message || 'Failed to send message'}`;
-        }
-    } catch (error) {
-        console.error('Error sending message:', error);
-        formMessage.className = 'form-message error';
-        formMessage.textContent = 'Error sending message. Please try again.';
     }
 
-    // Hide message after 5 seconds
-    setTimeout(() => {
-        formMessage.className = 'form-message';
-    }, 5000);
-});
-
-// Get CSRF token from cookies
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + '=') {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
     return cookieValue;
+
 }
 
-// Load all data when page loads
-document.addEventListener('DOMContentLoaded', () => {
+// -------------------------
+// Page Load
+// -------------------------
+document.addEventListener("DOMContentLoaded", () => {
+
     loadSkills();
+
     loadProjects();
+
     loadServices();
+
     loadVisitorCount();
 
-    // Reload visitor count every 10 seconds
-    setInterval(loadVisitorCount, 10000);
 });
 
-// Add smooth scroll behavior for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
+// -------------------------
+// Smooth Scroll
+// -------------------------
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+    link.addEventListener("click", function (e) {
+
+        const target = document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+
             e.preventDefault();
-            document.querySelector(href).scrollIntoView({
-                behavior: 'smooth'
+
+            target.scrollIntoView({
+
+                behavior: "smooth"
+
             });
+
         }
+
     });
+
 });
