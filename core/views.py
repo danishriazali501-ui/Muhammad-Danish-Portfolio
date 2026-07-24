@@ -11,10 +11,6 @@ from .serializers import SkillSerializer, ProjectSerializer, ServiceSerializer, 
 
 
 # ── HOME PAGE ──
-from django.shortcuts import render
-
-def home(request):
-    return render(request, "main/index.html")
 
 from django.http import HttpResponse
 
